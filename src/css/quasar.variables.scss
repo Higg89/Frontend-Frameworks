@@ -12,9 +12,11 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary: #1976d2;
-$secondary: #26a69a;
-$accent: #9c27b0;
+// Red brand palette. The primary color is dark enough for white text
+// (contrast ratio above 4.5:1), so buttons and the header stay accessible.
+$primary: #c62828;
+$secondary: #8e0000;
+$accent: #ff7043;
 
 $dark: #1d1d1d;
 $dark-page: #121212;
