@@ -1,0 +1,14 @@
+{
+  "/api/tasks": "/todos",
+  "/api/tasks/:id": "/todos/:id",
+  "/api/users/:id/tasks": "/todos?userId=:id",
+  "/api/users/:id": "/users/:id",
+  "/api/labels": "/tags",
+  "/api/labels/:id": "/tags/:id",
+  "/tasks": "/todos",
+  "/tasks/:id": "/todos/:id",
+  "/users/:id/tasks": "/todos?userId=:id",
+  "/users/:id": "/users/:id",
+  "/labels": "/tags",
+  "/labels/:id": "/tags/:id"
+}

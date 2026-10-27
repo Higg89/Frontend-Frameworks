@@ -1,0 +1,103 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+# Allow the workflow to publish to GitHub Pages and verify the deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time; do not cancel an in-flight release.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build production bundle
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify sources
+        run: npm run typecheck && npm run lint:check && npm test
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Compute base path
+        id: base
+        run: |
+          REPO="${{ github.event.repository.name }}"
+          OWNER="${{ github.repository_owner }}"
+
+          if [ "$REPO" = "$OWNER.github.io" ]; then
+            echo "path=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=/$REPO/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        env:
+          # Project sites are served from https://<owner>.github.io/<repo>/.
+          VITE_BASE_PATH: ${{ steps.base.outputs.path }}
+          VITE_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io${{ steps.base.outputs.path }}
+          # The demo API runs entirely in the browser (localStorage), so the
+          # published preview works without a backend. Set to "false" when a
+          # real API is configured through VITE_API_BASE_URL.
+          VITE_USE_MOCK_API: 'true'
+          # Never enable real Sentry without providing the DSN through secrets.
+          VITE_SENTRY_ENABLED: 'false'
+          VITE_ANALYTICS_ENABLED: 'false'
+        run: npm run build
+
+      - name: Analyze bundle size
+        run: npm run analyze
+
+      - name: Upload bundle report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-report
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 14
+
+      # The build hook copies index.html to 404.html. Keep this explicit check
+      # so a broken SPA fallback fails the deployment instead of silently
+      # producing 404s for deep links.
+      - name: Verify SPA fallback
+        run: test -f dist/spa/404.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/spa
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

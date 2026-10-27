@@ -1,0 +1,33 @@
+// app global css
+
+// Quasar only sets body colors for the dark theme. When the OS prefers dark
+// colors, the browser default text color is white even in the light theme, so
+// the sidebar and task titles become invisible on white backgrounds.
+body.body--light {
+  color: #000;
+  background: #fff;
+}
+
+// Keep content readable on wide screens without changing the mobile layout.
+.q-page {
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+// Quasar's text-h4 is quite large for a 360px-wide screen.
+@media (max-width: 599px) {
+  .text-h4 {
+    font-size: 1.75rem !important;
+    line-height: 2rem !important;
+  }
+
+  .text-h5 {
+    font-size: 1.35rem !important;
+    line-height: 1.75rem !important;
+  }
+
+  .q-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}

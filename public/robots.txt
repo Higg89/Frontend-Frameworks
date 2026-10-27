@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Private screens: no value for search engines.
+Disallow: /settings
+Disallow: /404
+
+# The app uses client-side routing. GitHub Pages serves 404.html for deep
+# links, and search engines still receive the rendered SPA after JavaScript
+# executes.

@@ -1,0 +1,104 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Алексей",
+      "email": "alexey@example.com",
+      "settings": {
+        "showCreatedAt": true
+      }
+    },
+    {
+      "id": 2,
+      "name": "Мария",
+      "email": "maria@example.com",
+      "settings": {
+        "showCreatedAt": true
+      }
+    },
+    {
+      "id": 3,
+      "name": "Иван",
+      "email": "ivan@example.com",
+      "settings": {
+        "showCreatedAt": false
+      }
+    }
+  ],
+  "todos": [
+    {
+      "id": 2,
+      "title": "Купить продукты",
+      "completed": false,
+      "createdAt": "2026-10-21T01:13:06.582Z",
+      "userId": 2,
+      "tagId": 4
+    },
+    {
+      "id": 3,
+      "title": "Ответить на письмо",
+      "completed": false,
+      "createdAt": "2026-10-07T20:46:42.085Z",
+      "userId": 3,
+      "tagId": 2
+    },
+    {
+      "id": 5,
+      "title": "Записаться к врачу",
+      "completed": true,
+      "createdAt": "2026-10-21T06:28:44.519Z",
+      "userId": 2,
+      "tagId": 4
+    },
+    {
+      "id": 6,
+      "title": "Оплатить интернет",
+      "completed": false,
+      "createdAt": "2026-10-22T03:40:01.723Z",
+      "userId": 3,
+      "tagId": 3
+    },
+    {
+      "id": 8,
+      "title": "Полить цветы",
+      "completed": false,
+      "createdAt": "2026-10-19T01:01:35.511Z",
+      "userId": 2,
+      "tagId": 1
+    },
+    {
+      "id": 9,
+      "title": "Собрать документы",
+      "completed": true,
+      "createdAt": "2026-10-27T02:41:17.188Z",
+      "userId": 3,
+      "tagId": 2
+    },
+    {
+      "title": "впаывупа",
+      "completed": true,
+      "createdAt": "2026-10-27T10:34:56.458Z",
+      "userId": 1,
+      "tagId": 1,
+      "id": 10
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "Учёба"
+    },
+    {
+      "id": 2,
+      "name": "Работа"
+    },
+    {
+      "id": 3,
+      "name": "Дом"
+    },
+    {
+      "id": 4,
+      "name": "Личное"
+    }
+  ]
+}

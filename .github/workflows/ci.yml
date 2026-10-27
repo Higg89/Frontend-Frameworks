@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Typecheck, lint and tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint:check
+
+      - name: Unit and component tests with coverage
+        run: npm run test:coverage
+
+      - name: Publish coverage summary
+        if: always()
+        run: |
+          if [ -f coverage/coverage-summary.json ]; then
+            node --input-type=module -e "
+              import { readFileSync, appendFileSync } from 'node:fs';
+              const summary = JSON.parse(readFileSync('coverage/coverage-summary.json', 'utf8')).total;
+              const row = (label, value) => '| ' + label + ' | ' + value.pct + '% |';
+              const lines = [
+                '## Coverage',
+                '',
+                '| Metric | % |',
+                '| --- | --- |',
+                row('Statements', summary.statements),
+                row('Branches', summary.branches),
+                row('Functions', summary.functions),
+                row('Lines', summary.lines),
+              ];
+              appendFileSync(process.env.GITHUB_STEP_SUMMARY, lines.join('\n') + '\n');
+            "
+          fi
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          if-no-files-found: warn
+          retention-days: 14

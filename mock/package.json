@@ -1,0 +1,16 @@
+{
+  "name": "todo-mock-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local json-server mock API for the Todo app",
+  "scripts": {
+    "seed": "node seed.js",
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "8.4.1",
+    "dotenv": "^17.2.3",
+    "json-server": "0.17.4"
+  }
+}

@@ -1,0 +1,4 @@
+# SPA fallback for Netlify / Cloudflare Pages and other hosts that support
+# the _redirects format. GitHub Pages ignores this file and uses 404.html
+# (generated from index.html during the build) instead.
+/*    /index.html   200

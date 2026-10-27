@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <title><%= productName %></title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="<%= appDescription %>" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#1976d2" />
+    <meta name="robots" content="index,follow" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover<% } %>"
+    />
+
+    <% if (appUrl) { %>
+    <link rel="canonical" href="<%= appUrl %>" />
+    <% } %>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="<%= appName %>" />
+    <meta property="og:title" content="<%= appName %>" />
+    <meta property="og:description" content="<%= appDescription %>" />
+    <meta property="og:image" content="<%= appImage %>" />
+    <meta property="og:locale" content="ru_RU" />
+    <% if (appUrl) { %>
+    <meta property="og:url" content="<%= appUrl %>" />
+    <% } %>
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<%= appName %>" />
+    <meta name="twitter:description" content="<%= appDescription %>" />
+    <meta name="twitter:image" content="<%= appImage %>" />
+
+    <link rel="icon" type="image/png" sizes="128x128" href="icons/favicon-128x128.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+    <link rel="icon" type="image/ico" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png" />
+  </head>
+  <body>
+    <noscript>Для работы приложения необходимо включить JavaScript.</noscript>
+    <!-- quasar:entry-point -->
+  </body>
+</html>
